@@ -1,9 +1,9 @@
 body {
-	padding-top: 70px;
+	padding-top: 10px;
 	background: url('http://api.thumbr.it/whitenoise-361x370.png?background=c94e4e&noise=626262&density=15&opacity=15');
 }
 
 .bigButton {
-	line-height: 200px;
+	line-height: 90px;
 	margin-bottom: 10px;
 }
