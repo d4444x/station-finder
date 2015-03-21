@@ -7,3 +7,16 @@ body {
 	line-height: 90px;
 	margin-bottom: 10px;
 }
+
+.btn-selected {
+	background-color: #BABABA;
+	white-space: inherit ! important;
+}
+
+.btn-selected:hover {
+	background-color: #E6E6E6;
+}
+
+.cat {
+	text-align: left;
+}

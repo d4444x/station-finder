@@ -1,22 +1,52 @@
 
 $(document).ready(function () {	
+	
+
+
 	$(".navbar-nav li a").click(function(event) {
     	$(".navbar-collapse").collapse('hide');
 	});
 
 	$("#find").click(getLocation);
 	$("#learn").click(learn);
-	$("#prefs").click(prefs);
+
+	$("#prefs").click(function(event) {
+		$("#main").addClass('hidden');
+		$("#prefV").removeClass('hidden');
+	});
+
+	$("#save").click(function(event) {
+		setCookie("test", "tester");
+		console.log(getCookie("test"));
+		$("#main").removeClass('hidden');
+		$("#prefV").addClass('hidden');
+	});
 });
 
 function learn(event) {
-	var msg = new SpeechSynthesisUtterance('Hello World');
-    window.speechSynthesis.speak(msg);
+	if ('speechSynthesis' in window) {
+		var msg = new SpeechSynthesisUtterance('Hello World');
+    	window.speechSynthesis.speak(msg);
+	}	
 }
 
-function prefs(event) {
-
+function setCookie(cname, cvalue) {
+	var expiration_date = new Date();
+	expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+	
+    document.cookie = cname + "=" + cvalue + "; expires=" + expiration_date.toGMTString();
 }
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+} 
 
 function getLocation(event) {
 	console.log("Requesting geolocation...");
