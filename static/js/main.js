@@ -6,11 +6,21 @@ $(document).ready(function () {
 	$(".navbar-nav li a").click(function(event) {
     	$(".navbar-collapse").collapse('hide');
 	});
+
+	$("#find").click(getLocation);
+	$("#learn").click(learn);
+	$("#prefs").click(prefs);
 });
 
+function learn(event) {
 
+}
 
-function getLocation() {
+function prefs(event) {
+
+}
+
+function getLocation(event) {
 	console.log("Requesting geolocation...");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(handlePosition); // could use watch position instead of get position
@@ -52,4 +62,5 @@ function getRadioStation(zip) {
 function handleStation(json) {
 	console.log("Received station");
 	console.log("Recommended station: " + json.station);
+	$("#station").text(json.station);
 }
