@@ -1,7 +1,7 @@
 
 $(document).ready(function () {
-	var audio = new Audio();
-	audio.src ='http://translate.google.com/translate_tts?ie=utf-8&tl=en&q=Hello%20World.';
+	// var audio = new Audio();
+	// audio.src ='http://translate.google.com/translate_tts?ie=utf-8&tl=en&q=Hello%20World.';
 	//audio.play();
 	$(".navbar-nav li a").click(function(event) {
     	$(".navbar-collapse").collapse('hide');
