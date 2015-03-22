@@ -199,25 +199,31 @@ function handleLocationJson(json) { // example data: http://maps.googleapis.com/
 	var zip = json.results[0].address_components[7].long_name;
 	var state = json.results[0].address_components[5].long_name;
 	var city = json.results[0].address_components[3].long_name;
+	var lng = json.results[0].geometry.location.lng;
+	var lat = json.results[0].geometry.location.lat;
 	console.log("Current Zipcode: " + zip);
-	getRadioStation([city, state, zip]);
+	getRadioStation([city, state, zip, lng, lat]);
 }
 
 function getRadioStation(data) {
 	console.log("Requesting station...");
-	// $.ajax({ url: '/getStation?zip='+zip,
-	// 		success: handleStation,
-	// 		error: function(error, msg, ex) {
-    //         		console.log("The following error occured: " + msg);
-    //         	}
-	// });
-	handleStation({'station': ['89.1', '106.1']});
+	$.ajax({ url: '/get_station?city='+data[0]+
+					'&state='+data[1]+
+					'&zip='+data[2]+
+					'&categories='+getCookie('prefs')+
+					'&lng='+data[3]+
+					'&lat='+data[4],
+			success: handleStation,
+			error: function(error, msg, ex) {
+            		console.log("The following error occured: " + msg);
+            	}
+	});
 }
 
 function handleStation(json) {
 	console.log("Received station");
-	console.log("Recommended stations: " + json.station);
-	var stations = json.station.join(",");
+	console.log("Recommended stations: " + json.stations);
+	var stations = json.stations.join(",");
 	if (stations.length == 0) {
 		return;
 	}
