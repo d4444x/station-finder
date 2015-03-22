@@ -3,6 +3,7 @@ from flask import Flask,render_template,request,jsonify
 app = Flask(__name__)
 import json
 import db
+import learnTheLand
 
 categories = ["Country", "Spanish", "Christian", "Talk Radio", "Contemporary", "News", "Classical", "Sports", "Hits", "Alternative", "Oldies", "Jazz"]
 
@@ -25,16 +26,26 @@ def get_station():
 def lat_long():
     lat = float(request.args.get('lat'))
     long = float(request.args.get("lng"))
-    if request.args.get('categories')=="":
-        categories = "Country, "
     categories = request.args.get('categories').split(",")
     categories.pop()
+    if categories==[]:
+        categories = "Country"
     print categories
     print request.args.get('categories')
     print "Looking up "+str(lat)+" "+str(long)+" "+str(categories)
     ls = db.get_stations_long_lat(lat,long,categories)
     print ls
     return jsonify({"stations":[station[1] for station in ls]})
+
+@app.route("/land")
+def get_info():
+    lat = float(request.args.get('lat'))
+    long = float(request.args.get("lng"))
+    city = learnTheLand.getCity(lat,long)
+
+    learnTheLand.getLandmarks(city)
+    learnTheLand.getNickName()
+
 
 
 

@@ -1,12 +1,13 @@
 ## ========================================================
 ## ========================================================
-##			INSTALL WIKIPEDIA AND WOLFRAMALPHA SDK
+##				INSTALL WIKIPEDIA
 ## ========================================================
 ## ========================================================
 
 import random
+import requests
 import wikipedia
-import wolframalpha
+
 
 app_id = "Q9WERY-K3HTGTL99H"
 client = wolframalpha.Client(app_id)
@@ -58,123 +59,134 @@ def getSummaryPerson(search, city):
 
 ## LATITUDE (N) LONGITUDE (E)
 def getCity(lat, lon):
-	query = "%s North, %s East" % (lat, lon)
+
+	query = "http://api.wolframalpha.com/v2/query?appid=" + str(app_id) + "&input=" + str(lat) + "%20North%2C%20" + str(lon) + "%20East&format=plaintext&includepodid=CartographicNearestCity"
 
 	if query not in cache:
-		data = client.query(query)
-		cache[query] = data
-	
-	try:
-		res = (next(cache[query].nearestCityCenter).text).split("(")[0]
-	except:
-		getCity(lat, lon)
+		r = requests.get(query)
 
-	res = res.replace(", United States", "")
+		startIndex = r.text.find("<plaintext>") #+11
+		endIndex = r.text.find("(")
 
-	return res
+		if startIndex == -1 or startIndex+11 == endIndex:
+			return "NULL"
+
+		res = r.text[startIndex+11:endIndex]
+		res = res.replace(", United States", "")
+		cache[query] = res
+
+	return cache[query]
 
 ## POPULATION DATA: 
 def getPopulationData(city):
-	query = city
+
+	query = "http://api.wolframalpha.com/v2/query?appid=" + str(app_id) + "&input= " + str(city) + " &format=plaintext&includepodid=Population:CityData"
 
 	if query not in cache:
-		data = client.query(query)
-		cache[query] = data
+		r = requests.get(query)
 
-	try:
-		res = (next(cache[query].population).text).split("(")[0]
-	except:
-		getPopulationData(city)
+		startIndex = r.text.find("<plaintext>") #+11
+		endIndex = r.text.find("(2012 estimate)") #+15
 
-	return res
+		if startIndex == -1 or startIndex+11 == endIndex:
+			return "NULL"
+
+		res = r.text[startIndex+11:endIndex+15]
+		cache[query] = res
+
+	return cache[query]
+
 
 ## CRIME DATA
 def getCrimeData(city):
-	query = city
-
+	query = "http://api.wolframalpha.com/v2/query?appid=" + str(app_id) + "&input=crime " + str(city) + " &format=plaintext&includepodid=Result"
+	
 	if query not in cache:
-		data = client.query(query)
-		cache[query] = data
+		r = requests.get(query)
 
-	try:
-		res = (next(cache[query].crime).text).split("  ")[0] + " x national average"
-	except:
-		getCrimeData(city)
+		startIndex = r.text.find("<plaintext>") #+11
+		endIndex = r.text.find(")")
 
-	return res
+		if startIndex == -1 or startIndex+11 == endIndex:
+			return "NULL"
+
+		res = r.text[startIndex+11:endIndex+1]
+		cache[query] = res
+
+	return cache[query]
 
 ## NICKNAMES
 def getNickName(city):
-	query = city + " nicknames"
-
+	query = "http://api.wolframalpha.com/v2/query?appid=" + str(app_id) + "&input=nicknames " + str(city) + " &format=plaintext&includepodid=Result"
+	
 	if query not in cache:
-		data = client.query(query)
+		r = requests.get(query)
 
-		try:
-			res = next(data.result).text
-		except:
-			getNickName(city)
+		startIndex = r.text.find("<plaintext>") #+11
+		endIndex = r.text.find("</plaintext>")
 
-		if res == "":
-			return "NONE"
+		if startIndex == -1 or startIndex+11 == endIndex:
+			return "NULL"
+
+		res = r.text[startIndex+11:endIndex]
+
+
 
 		res = res.split("  |  ")
 
 		cache[query] = res
 
-	rand = int((len(cache[query])-1) * random.random())
-
+	rand = int((len(cache[query])) * random.random())
 	return cache[query][rand]
 
 ## LANDMARKS
 def getLandmarks(city):
-	query = "Closest Historical Site " + city
-
+	query = "http://api.wolframalpha.com/v2/query?appid=" + str(app_id) + "&input=historical%20site%20within%2050%20miles%20of " + str(city) + "&format=plaintext&includepodid=Result&podstate=Result__More"
+	
 	if query not in cache:
-		data = client.query(query)
+		r = requests.get(query)
 
-		try:
-			result = next(data.landmark).text
-		except:
-			getLandmarks(city)
+		startIndex = r.text.find("<plaintext>") #+11
+		endIndex = r.text.find("</plaintext>")
 
-		landmark = [] # Goodies
-
-		if result == "":
+		## NULL
+		if startIndex == -1 or startIndex+11 == endIndex:
 			return "NONE"
 
-		result = result.split("\n")
+		res = r.text[startIndex+11:endIndex]
+		res = res.split("\n")
+		
+		landmark = [] # Goodies
 
-		for building in result:
+		for building in res:
 			building = building.split("  ")
 			landmark.append(building[0])
 
 		cache[query] = landmark
 
-	rand = int((len(cache[query])-1) * random.random())
+	rand = int(len(cache[query]) * random.random())
 
 	return cache[query][rand]
 
 def getNotablePeople(city):
-	query = "notable people in " + city
-
+	query = "http://api.wolframalpha.com/v2/query?appid=" + str(app_id) + "&input=notable%20people%20in " + str(city) + " &format=plaintext&includepodid=Result"
+	
 	if query not in cache:
-		data = client.query(query)
+		r = requests.get(query)
 
-		try:
-			people = (next(data.result).text)
-		except:
-			getNotablePeople(city)
+		startIndex = r.text.find("<plaintext>")
+		endIndex = r.text.find("</plaintext>")
 
 		## NULL
-		if people == "":
+		if startIndex == -1 or startIndex+11 == endIndex:
 			return "NONE"
 
-		people = people.split('\n')
+		res = r.text[startIndex+11:endIndex]
+		res = res.split("\n")
 
-		names = [] ## has all the goodies to search
+		names = [] # Goodies
 
-		for person in people:
+		for person in res:
 			person = person.split("  ")
 			if len(person)!=2:
 				continue
@@ -183,7 +195,7 @@ def getNotablePeople(city):
 
 		cache[query] = names
 
-	rand = int((len(cache[query])-1) * random.random())
+	rand = int(len(cache[query]) * random.random())
 
 	return cache[query][rand]
 
