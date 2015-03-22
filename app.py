@@ -42,13 +42,14 @@ def lat_long():
 
 @app.route("/land")
 def get_info():
-    if not session.has_key("time"):
+    if not session.has_key("time") or not session.has_key("to_say"):
         session["time"] = None
+        session["to_say"] = None
     lat = float(request.args.get('lat'))
     long = float(request.args.get("lng"))
     if not lat or not long:
         return "Lat or long not given"
-    if session["time"] and session["time"]-time.now()>500 or len(session["to_say"])==0:
+    if session["time"] and session["time"]-time.now()>500 or session["to_say"] or len(session["to_say"])==0:
         session["time"] = None
 
     if session["time"] == None:
