@@ -236,6 +236,16 @@ function handleStation(json) {
 	var stations = json.stations.join(",");
 	if (stations.length == 0) {
 		$("#station").html("None found :(");
+		setCookie('stations', 'None found :(');
+		if ('speechSynthesis' in window) {
+			var msg = new SpeechSynthesisUtterance('no stations for found for your preferences');
+	    	window.speechSynthesis.speak(msg);
+		} else {
+			console.log("SpeechSynthesisUtterance not supported")
+			var audio = new Audio();
+			audio.src = 'http://translate.google.com/translate_tts?ie=UTF-8&q=Hello%20World&tl=en-us';
+			audio.play();
+		}
 		return;
 	}
 	$("#last").removeClass('disabled');
