@@ -29,7 +29,7 @@ def lat_long():
     categories = request.args.get('categories').split(",")
     categories.pop()
     if categories==[]:
-        categories = "Country"
+        categories = ["Country"]
     print categories
     print request.args.get('categories')
     print "Looking up "+str(lat)+" "+str(long)+" "+str(categories)
