@@ -10,7 +10,6 @@ import wikipedia
 
 
 app_id = "Q9WERY-K3HTGTL99H"
-client = wolframalpha.Client(app_id)
 cache = {}
 ## Wikipedia Summary for cities
 def getSummary(search):
