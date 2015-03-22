@@ -62,9 +62,9 @@ def get_info():
     elif r==2:
         say = city+" is also known as "+ learnTheLand.getNickName()
     elif r==3:
-        say = learnTheLand.getSummaryPerson(learnTheLand.getNotablePeople(city),city)
+        say = "Born in "+city+" "+learnTheLand.getSummaryPerson(learnTheLand.getNotablePeople(city),city)
     elif r==4:
-        say = learnTheLand.getSummary(learnTheLand.getLandmarks(city))
+        say = "In "+city+" "+learnTheLand.getSummary(learnTheLand.getLandmarks(city))
     print say
     return jsonify({"to_say":say})
 
