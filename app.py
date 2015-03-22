@@ -16,6 +16,8 @@ def get_station():
     categories = request.args.get('categories').split(",")
     state = request.args.get('state')
     print city,state,categories
+    if categories==[""]:
+        categories = ["Country"]
     ls = db.get_stations_mason(city,state,categories)
     print ls
     return json.dumps({"stations":[station[1] for station in ls]})
