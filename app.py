@@ -70,7 +70,7 @@ def get_info():
         person = learnTheLand.getNotablePeople(city)
         say = learnTheLand.getSummaryPerson(person,city)
         sayy = say.split("\n")
-        if person not in say:
+        if person in sayy[1]:
             say = person + " "+ say
         say = "Born in "+city+" "+say
     else:
