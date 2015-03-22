@@ -154,7 +154,8 @@ function learnReq(position) {
 function handleLearn(json) {
 	console.log("Received info");
 	if ('speechSynthesis' in window) {
-		var msg = new SpeechSynthesisUtterance(json.to_say);
+		var msg = new SpeechSynthesisUtterance();
+		msg.text = json.to_say;
 		msg.rate = 0.75;
     	window.speechSynthesis.speak(msg);
 	} else {
