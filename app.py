@@ -14,8 +14,6 @@ def hello_world():
 def get_station():
     city = request.args.get('city')
     categories = request.args.get('categories')[:-1].split(",")
-    print categories
-    print request.args.get('categories')[:-1]
     state = request.args.get('state')
     print city,state,categories
     if categories==[""]:
@@ -28,7 +26,7 @@ def get_station():
 def lat_long():
     lat = float(request.args.get('lat'))
     long = float(request.args.get("lng"))
-    categories = request.args.get('categories').split(",")
+    categories = request.args.get('categories')[:-1].split(",")
     print "Looking up "+str(lat)+" "+str(long)+" "+str(categories)
     ls = db.get_stations_long_lat(lat,long,categories)
     print ls
