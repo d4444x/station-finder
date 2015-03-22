@@ -51,8 +51,13 @@ def get_info():
 
     if session["time"] and session["time"]-time.now()>500:
         session["time"] = None
+    elif session.has_key("lat") and session.has_key("long"):
+        lat = session["lat"]
+        long = session["long"]
 
-    if session["time"] == None or session["city"]==None:
+    if session["time"] == None:
+        session["lat"] = lat
+        session["long"] = long
         session["city"] = learnTheLand.getCity(lat,long)
 
     r = random.randint(1,80)
