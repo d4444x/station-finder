@@ -1,7 +1,7 @@
 import glob
 from sets import Set
 
-states = glob.glob("C:\\Users\\daxx\\PycharmProject\\station-finder\\radio_info\*.stations")
+states = glob.glob("/radio_info/*.stations")
 categories = Set()
 for state in states:
     f = open(state, "r")
@@ -15,7 +15,7 @@ for state in states:
             categories.add(category)
 
 
-states = glob.glob("C:\\Users\\daxx\\PycharmProject\\station-finder\\radio_info\*.stations")
+states = glob.glob("/radio_info/*.stations")
 
 ss = {}
 
@@ -86,6 +86,7 @@ def get_stations_asher(categories, city_state):
             pass
 
 def get_stations_mason(city,state,categories):
+    print ss
     stations = ss[state.lower().replace(" ","")]
     stations = filter_by_city([city],stations)
     stations = filter_by_category(categories,stations)
