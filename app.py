@@ -34,7 +34,8 @@ def lat_long():
     #     categories.pop()
     # if len(request.args.get('categories'))==0 or request.args.get('categories')=="":
     #
-    # categories = ["Country"]
+    if len(categories)>1:
+        categories.pop()
     print categories
     print request.args.get('categories')
     print "Looking up "+str(lat)+" "+str(long)+" "+str(categories)
