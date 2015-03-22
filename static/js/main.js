@@ -226,6 +226,7 @@ function handleStation(json) {
 	console.log("Recommended stations: " + json.stations);
 	var stations = json.stations.join(",");
 	if (stations.length == 0) {
+		$("#station").html("None found :(");
 		return;
 	}
 	$("#last").removeClass('disabled');
