@@ -55,19 +55,19 @@ def get_info():
     if session["time"] == None or session["city"]==None:
         session["city"] = learnTheLand.getCity(lat,long)
 
-    r = random.randint(1,4)
+    r = random.randint(1,80)
     city = session["city"]
-    if r ==1:
+    if r <10:
         say = "In "+city+" there are " +learnTheLand.getCrimeData(city)
-    elif r==2:
+    elif r<20:
         say = city+" is also known as "+ learnTheLand.getNickName(city)
-    elif r==3:
+    elif r<50:
         person = learnTheLand.getNotablePeople(city)
         say = learnTheLand.getSummaryPerson(person,city)
         if person not in say:
             say = person + " "+ say
         say = "Born in "+city+" "+say
-    elif r==4:
+    else:
         landmark = learnTheLand.getLandmarks(city)
         say = learnTheLand.getSummary(landmark)
         if landmark not in say:
