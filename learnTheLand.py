@@ -1,13 +1,13 @@
 ## ========================================================
 ## ========================================================
-##			INSTALL WIKIPEDIA AND WOLFRAMALPHA SDK
+##				INSTALL WIKIPEDIA
 ## ========================================================
 ## ========================================================
 
 import random
 import requests
 import wikipedia
-import wolframalpha
+
 
 app_id = "Q9WERY-K3HTGTL99H"
 client = wolframalpha.Client(app_id)
