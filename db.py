@@ -19,6 +19,20 @@ states = glob.glob("C:\\Users\\daxx\\PycharmProject\\station-finder\\radio_info\
 
 ss = {}
 
+
+for state in states:
+    f = open(state, "r")
+    state = state[55:].replace(".stations","")
+    ss[state] = []
+    for l in f:
+        if len(l.split("\t"))!=5:
+            continue
+        tag, station, city, _, category = l.split("\t")
+        category = category.replace("\n","")
+        category = category.split("/")
+        if category!=[""]:
+            ss[state].append([tag, station, city, category])
+
 def matches(ls1,ls2):
     #Category from user should be second
     for i1 in ls1:
