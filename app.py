@@ -25,7 +25,7 @@ def get_station():
 @app.route("/get_station")
 def lat_long():
     lat = float(request.args.get('lat'))
-    long = float(request.args.get("lon"))
+    long = float(request.args.get("lng"))
     categories = request.args.get('categories').split(",")
     ls = db.get_stations_long_lat(lat,long,categories)
     print ls
