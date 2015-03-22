@@ -69,15 +69,16 @@ def get_info():
     elif r<50:
         person = learnTheLand.getNotablePeople(city)
         say = learnTheLand.getSummaryPerson(person,city)
+        sayy = say.split("\n")
         if person not in say:
             say = person + " "+ say
         say = "Born in "+city+" "+say
     else:
         landmark = learnTheLand.getLandmarks(city)
         say = learnTheLand.getSummary(landmark)
-        if landmark not in say:
-            say = landmark+" "+say
-            say = say
+        sayy = say.split("\n")
+        if landmark in sayy[1]:
+            say = sayy[1]
         say = "In "+city+" "+say
 
     print say
