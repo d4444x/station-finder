@@ -1,5 +1,5 @@
 __author__ = 'daxx'
-from flask import Flask,render_template,request
+from flask import Flask,render_template,request,jsonify
 app = Flask(__name__)
 import json
 import db
@@ -20,7 +20,7 @@ def get_station():
         categories = ["Country"]
     ls = db.get_stations_mason(city,state,categories)
     print ls
-    return json.dumps({"stations":[station[1] for station in ls]})
+    return jsonify({"stations":[station[1] for station in ls]})
 
 
 
