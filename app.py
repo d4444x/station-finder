@@ -16,8 +16,7 @@ def get_station():
     categories = request.args.get('categories')[:-1].split(",")
     state = request.args.get('state')
     print city,state,categories
-    if categories==[""]:
-        categories = ["Country"]
+
     ls = db.get_stations_mason(city,state,categories)
     print ls
     return jsonify({"stations":[station[1] for station in ls]})
@@ -26,9 +25,11 @@ def get_station():
 def lat_long():
     lat = float(request.args.get('lat'))
     long = float(request.args.get("lng"))
-    categories = request.args.get('categories')[:-1].split(",")
+    if request.args.get('categories')=="":
+        categories = "Country, "
+    categories = request.args.get('categories')[:-2].split(",")
     print categories
-    print request.args.get('categories')[:-1]
+    print request.args.get('categories')[:-2]
     print "Looking up "+str(lat)+" "+str(long)+" "+str(categories)
     ls = db.get_stations_long_lat(lat,long,categories)
     print ls
