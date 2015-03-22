@@ -27,6 +27,8 @@ def lat_long():
     lat = float(request.args.get('lat'))
     long = float(request.args.get("lng"))
     categories = request.args.get('categories')[:-1].split(",")
+    print categories
+    print request.args.get('categories')[:-1]
     print "Looking up "+str(lat)+" "+str(long)+" "+str(categories)
     ls = db.get_stations_long_lat(lat,long,categories)
     print ls
