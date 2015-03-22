@@ -62,9 +62,9 @@ def get_info():
 
     r = random.randint(1,80)
     city = session["city"]
-    if r <10:
+    if r <5:
         say = "In "+city+" there are " +learnTheLand.getCrimeData(city)
-    elif r<20:
+    elif r<10:
         say = city+" is also known as "+ learnTheLand.getNickName(city)
     elif r<50:
         person = learnTheLand.getNotablePeople(city)
