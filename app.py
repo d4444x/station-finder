@@ -29,7 +29,7 @@ def lat_long():
     categories = request.args.get('categories').split(",")
     print "Looking up "+str(lat)+" "+str(long)+" "+str(categories)
     ls = db.get_stations_long_lat(lat,long,categories)
-    # print ls
+    print ls
     return jsonify({"stations":[station[1] for station in ls]})
 
 
