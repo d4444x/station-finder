@@ -10,7 +10,7 @@ categories = ["Country", "Spanish", "Christian", "Talk Radio", "Contemporary", "
 def hello_world():
     return render_template("index.html", categories=sorted(categories))
 
-@app.route('/get_station')
+@app.route('/get_station_2')
 def get_station():
     city = request.args.get('city')
     categories = request.args.get('categories').split(",")
@@ -22,7 +22,7 @@ def get_station():
     print ls
     return jsonify({"stations":[station[1] for station in ls]})
 
-@app.route("/get_station_lat_long")
+@app.route("/get_station")
 def lat_long():
     lat = float(request.args.get('lat'))
     long = float(request.args.get("lon"))
