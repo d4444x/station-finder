@@ -37,7 +37,7 @@ $(document).ready(function () {
 			$(this).html("");
 			$(this).text($(this).attr('id'));
 		}
-        setTimeout(function() {window.scrollTo(scroll,scroll);}, 10);
+        setTimeout(function() {window.scrollTo(scroll,scroll);}, 20);
 	});
 
 	$("#select").click(function(event) {
@@ -47,7 +47,7 @@ $(document).ready(function () {
 				$(this).addClass('btn-selected');
 				$(this).append('<span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>');
 			}
-            setTimeout(function() {window.scrollTo(scroll,scroll);}, 10);
+            setTimeout(function() {window.scrollTo(scroll,scroll);}, 20);
 		});
 	});
 
@@ -59,7 +59,7 @@ $(document).ready(function () {
 				$(this).html("");
 				$(this).text($(this).attr('id'));
 			}
-            setTimeout(function() {window.scrollTo(scroll,scroll);}, 10);
+            setTimeout(function() {window.scrollTo(scroll,scroll);}, 20);
 		});
 	});
 });
