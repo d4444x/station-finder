@@ -1,10 +1,13 @@
 __author__ = 'daxx'
-from flask import Flask,render_template,request,jsonify
+from flask import Flask,render_template,request,jsonify,session
+import random
 app = Flask(__name__)
 import json
 import db
 import learnTheLand
+import time
 
+app.secret_key = '123ksjdfa9123afd'
 categories = ["Country", "Spanish", "Christian", "Talk Radio", "Contemporary", "News", "Classical", "Sports", "Hits", "Alternative", "Oldies", "Jazz"]
 
 @app.route('/')
@@ -39,12 +42,49 @@ def lat_long():
 
 @app.route("/land")
 def get_info():
+    if not session.has_key("time"):
+        session["time"] = None
     lat = float(request.args.get('lat'))
     long = float(request.args.get("lng"))
-    city = learnTheLand.getCity(lat,long)
+    if not lat or not long:
+        return "Lat or long not given"
 
-    learnTheLand.getLandmarks(city)
-    learnTheLand.getNickName()
+    if session["time"] and session["time"]-time.now()>500:
+        session["time"] = None
+    elif session.has_key("lat") and session.has_key("long"):
+        lat = session["lat"]
+        long = session["long"]
+
+    if session["time"] == None:
+        session["lat"] = lat
+        session["long"] = long
+        session["city"] = learnTheLand.getCity(lat,long)
+
+    r = random.randint(1,80)
+    city = session["city"]
+    if r <10:
+        say = "In "+city+" there are " +learnTheLand.getCrimeData(city)
+    elif r<20:
+        say = city+" is also known as "+ learnTheLand.getNickName(city)
+    elif r<50:
+        person = learnTheLand.getNotablePeople(city)
+        say = learnTheLand.getSummaryPerson(person,city)
+        if person not in say:
+            say = person + " "+ say
+        say = "Born in "+city+" "+say
+    else:
+        landmark = learnTheLand.getLandmarks(city)
+        say = learnTheLand.getSummary(landmark)
+        if landmark not in say:
+            say = landmark+" "+say
+            say = say
+        say = "In "+city+" "+say
+
+    print say
+    return jsonify({"to_say":say})
+
+
+
 
 
 
