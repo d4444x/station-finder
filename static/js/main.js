@@ -238,7 +238,7 @@ function handleStation(json) {
 		$("#station").html("None found :(");
 		setCookie('stations', 'None found :(');
 		if ('speechSynthesis' in window) {
-			var msg = new SpeechSynthesisUtterance('no stations for found for your preferences');
+			var msg = new SpeechSynthesisUtterance('None found');
 	    	window.speechSynthesis.speak(msg);
 		} else {
 			console.log("SpeechSynthesisUtterance not supported")
