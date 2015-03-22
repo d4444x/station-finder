@@ -33,6 +33,8 @@ for state in states:
         if category!=[""]:
             ss[state].append([tag, station, city, category])
 
+print ss.keys()
+
 def matches(ls1,ls2):
     #Category from user should be second
     for i1 in ls1:
