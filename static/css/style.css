@@ -1,7 +1,12 @@
 body {
 	padding-top: 10px;
-	background: url('http://api.thumbr.it/whitenoise-361x370.png?background=c94e4e&noise=626262&density=15&opacity=15');
-    font-family: 'Open Sans', sans-serif;
+	background: url('http://api.thumbr.it/whitenoise-361x370.png?background=E6E2AFA&noise=626262&density=15&opacity=15');
+  font-family: 'Quicksand', sans-serif;
+  color: #002F2F;
+}
+
+a {
+  background-color: #046380 ! important;
 }
 
 .bigButton {
@@ -12,10 +17,21 @@ body {
 
 .btn-selected {
 	white-space: inherit ! important;
+  color: #fff ! important;
+}
+
+.btn-selected:hover {
+  color: #fff;
+}
+
+.cat:hover{
+  color: #fff;
 }
 
 .cat {
 	text-align: left;
+  color: #fff;
+  background-color: #4D4F4E ! important; 
 }
 
 .spinner {
@@ -46,4 +62,10 @@ body {
     -webkit-transform: scale(1.0);
     opacity: 0;
   }
+}
+
+.mainpagetitle {
+
+  font-weight: normal;
+  font-family: 'Cutive', serif;;
 }
