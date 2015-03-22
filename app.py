@@ -58,13 +58,23 @@ def get_info():
     r = random.randint(1,4)
     city = session["city"]
     if r ==1:
-        say = learnTheLand.getCrimeData(city)
+        say = "In "+city+" " +learnTheLand.getCrimeData(city)
     elif r==2:
         say = city+" is also known as "+ learnTheLand.getNickName()
     elif r==3:
-        say = "Born in "+city+" "+learnTheLand.getSummaryPerson(learnTheLand.getNotablePeople(city),city)
+        person = learnTheLand.getNotablePeople(city)
+        say = learnTheLand.getSummaryPerson(person,city)
+        if person not in say:
+            say = person + " "+ say
+        say = "Born in "+city+" "+say
     elif r==4:
-        say = "In "+city+" "+learnTheLand.getSummary(learnTheLand.getLandmarks(city))
+        landmark = learnTheLand.getLandmarks(city)
+        say = learnTheLand.getSummary(landmark)
+        if landmark not in say:
+            say = landmark+" "+say
+            say = say
+        say = "In "+city+" "+say
+
     print say
     return jsonify({"to_say":say})
 
