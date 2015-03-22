@@ -1,11 +1,16 @@
-
+var right = true;
 $(document).ready(function () {	
 	
 	setPrefs();
 
-	$(".navbar-nav li a").click(function(event) {
-    	$(".navbar-collapse").collapse('hide');
-	});
+	if (getCookie('stations') != "") {
+		$("#last").removeClass('disabled');
+		$("#next").removeClass('disabled');
+		next(null);
+	}
+
+	$("#last").click(last);
+	$("#next").click(next);
 
 	$("#find").click(getLocation);
 	$("#learn").click(learn);
@@ -62,7 +67,41 @@ $(document).ready(function () {
             setTimeout(function() {window.scrollTo(scroll,scroll);}, 10);
 		});
 	});
+
+	$("#reset").click(function(event) {
+		delCookie('prefs');
+		delCookie('stations')
+		location.reload();
+	});
 });
+
+function last(event) {
+	var stations = getCookie("stations").split(',');
+	var cur = stations.pop();
+	$("#station").html(cur);
+	stations.unshift(cur);
+	if (right) {
+		cur = stations.pop();
+		$("#station").html(cur);
+		stations.unshift(cur);		
+	}
+	setCookie('stations', stations)
+	right = false;
+}
+
+function next(event) {
+	var stations = getCookie("stations").split(',');
+	var cur = stations.shift();
+	$("#station").html(cur);
+	stations.push(cur);
+	if (!right) {
+		cur = stations.shift();
+		$("#station").html(cur);
+		stations.push(cur);
+	}
+	setCookie('stations', stations)
+	right = true;
+}
 
 function save() {
 	var prefs = "";
@@ -125,7 +164,14 @@ function getCookie(cname) {
         if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
     }
     return "";
-} 
+}
+
+function delCookie(cname) {
+	var expiration_date = new Date();
+	expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+	
+    document.cookie = cname + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+}
 
 function getLocation(event) {
 	console.log("Requesting geolocation...");
@@ -154,10 +200,10 @@ function handleLocationJson(json) { // example data: http://maps.googleapis.com/
 	var state = json.results[0].address_components[5].long_name;
 	var city = json.results[0].address_components[3].long_name;
 	console.log("Current Zipcode: " + zip);
-	getRadioStation(zip);
+	getRadioStation([city, state, zip]);
 }
 
-function getRadioStation(zip) {
+function getRadioStation(data) {
 	console.log("Requesting station...");
 	// $.ajax({ url: '/getStation?zip='+zip,
 	// 		success: handleStation,
@@ -165,11 +211,18 @@ function getRadioStation(zip) {
     //         		console.log("The following error occured: " + msg);
     //         	}
 	// });
-	handleStation({'station': '89.1'});
+	handleStation({'station': ['89.1', '106.1']});
 }
 
 function handleStation(json) {
 	console.log("Received station");
-	console.log("Recommended station: " + json.station);
-	$("#station").html(json.station);
+	console.log("Recommended stations: " + json.station);
+	var stations = json.station.join(",");
+	if (stations.length == 0) {
+		return;
+	}
+	$("#last").removeClass('disabled');
+	$("#next").removeClass('disabled');
+	setCookie('stations', stations);
+	next(null);
 }

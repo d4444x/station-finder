@@ -4,8 +4,9 @@ body {
 }
 
 .bigButton {
-	line-height: 90px;
+	line-height: 60px;
 	margin-bottom: 10px;
+	padding: 10px 0px;
 }
 
 .btn-selected {
@@ -15,3 +16,4 @@ body {
 .cat {
 	text-align: left;
 }
+
