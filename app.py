@@ -30,7 +30,7 @@ def lat_long():
     lat = float(request.args.get('lat'))
     long = float(request.args.get("lng"))
     categories = request.args.get('categories').split(",")
-    if len(categories>0):
+    if len(categories)>0:
         categories.pop()
     if len(request.args.get('categories'))==0 or request.args.get('categories')=="":
         categories = ["Country"]
