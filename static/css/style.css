@@ -2,6 +2,7 @@ body {
 	padding-top: 10px;
 	background: url('http://api.thumbr.it/whitenoise-361x370.png?background=c94e4e&noise=626262&density=15&opacity=15');
     font-family: 'Open Sans', sans-serif;
+    color: #fff;
 }
 
 .bigButton {

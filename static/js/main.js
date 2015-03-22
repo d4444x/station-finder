@@ -144,7 +144,7 @@ function learn(event) {
 function learnReq(position) {
 	console.log("Requesting facts...");
 	$.ajax({ url: '/land?lng='+position.coords.longitude+'&lat='+position.coords.latitude,
-			success: handleStation,
+			success: handleLearn,
 			error: function(error, msg, ex) {
          		console.log("The following error occured: " + msg);
             }
