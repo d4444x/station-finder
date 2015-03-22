@@ -86,6 +86,7 @@ def filter_by_city(cities, stations):
 def weird_states(c,states):
     stations_r = []
     for state in states:
+        state = state.lower()
         stations = ss[state]
         for station in stations:
             tag, s, city, ca = station
@@ -96,7 +97,7 @@ def weird_states(c,states):
 def get_stations_asher(categories, city_state):
     stations_r = []
     for city, states, dist in city_state:
-        stations_r+=weird_states(city,states)
+        stations_r+=weird_states(city.lower(),states)
     print stations_r
     stations_r = filter_by_category(categories,stations_r)
     return stations_r
