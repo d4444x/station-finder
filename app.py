@@ -58,9 +58,9 @@ def get_info():
     r = random.randint(1,4)
     city = session["city"]
     if r ==1:
-        say = "In "+city+" " +learnTheLand.getCrimeData(city)
+        say = "In "+city+" there are " +learnTheLand.getCrimeData(city)
     elif r==2:
-        say = city+" is also known as "+ learnTheLand.getNickName()
+        say = city+" is also known as "+ learnTheLand.getNickName(city)
     elif r==3:
         person = learnTheLand.getNotablePeople(city)
         say = learnTheLand.getSummaryPerson(person,city)
