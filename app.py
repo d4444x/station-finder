@@ -53,7 +53,7 @@ def get_info():
         session["time"] = None
 
     if session["time"] == None:
-        session["to_say"] = generate_to_say()
+        session["to_say"] = generate_to_say(lat,long)
         session["time"] = time.now()
     say = session["to_say"].pop()
     print say
