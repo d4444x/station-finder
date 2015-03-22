@@ -174,6 +174,7 @@ function delCookie(cname) {
 }
 
 function getLocation(event) {
+	$("#station").html('<div class="spinner"></div>');
 	console.log("Requesting geolocation...");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(handlePosition); // could use watch position instead of get position
