@@ -28,6 +28,7 @@ $(document).ready(function () {
 	});
 
 	$(".cat").click(function(event) {
+        var scroll = $(document).scrollTop();
 		if (!$(this).hasClass('btn-selected')) {
 			$(this).addClass('btn-selected');
 			$(this).append('<span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>');
@@ -36,24 +37,29 @@ $(document).ready(function () {
 			$(this).html("");
 			$(this).text($(this).attr('id'));
 		}
+        window.scrollTo(scroll,scroll);
 	});
 
 	$("#select").click(function(event) {
 		$(".cat").each(function(index) {
+            var scroll = $(document).scrollTop();
 			if (!$(this).hasClass('btn-selected')) {
 				$(this).addClass('btn-selected');
 				$(this).append('<span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>');
 			}
+            window.scrollTo(scroll,scroll);
 		});
 	});
 
 	$("#remove").click(function(event) {
 		$(".cat").each(function(index) {
+            var scroll = $(document).scrollTop();
 			if ($(this).hasClass('btn-selected')) {
 				$(this).removeClass('btn-selected');
 				$(this).html("");
 				$(this).text($(this).attr('id'));
 			}
+            window.scrollTo(scroll,scroll);
 		});
 	});
 });
