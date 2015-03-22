@@ -30,8 +30,9 @@ def lat_long():
     lat = float(request.args.get('lat'))
     long = float(request.args.get("lng"))
     categories = request.args.get('categories').split(",")
-    categories.pop()
-    if categories==[]:
+    if len(categories>0):
+        categories.pop()
+    if len(request.args.get('categories'))==0 or request.args.get('categories')=="":
         categories = ["Country"]
     print categories
     print request.args.get('categories')
@@ -84,7 +85,6 @@ def get_info():
         else:
             say = sayy[0]+" is known for "+sayy[1]
         say = "In "+city+" "+say
-
     print say
     return jsonify({"to_say":say})
 
