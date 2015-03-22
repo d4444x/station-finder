@@ -48,28 +48,26 @@ def get_info():
     long = float(request.args.get("lng"))
     if not lat or not long:
         return "Lat or long not given"
-    if session["time"]-time.now()>500 or len(session["to_say"])==0:
+
+    if session["time"] and session["time"]-time.now()>500:
         session["time"] = None
 
-    if session["time"] == None:
-        session["to_say"] = generate_to_say()
-        session["time"] = time.now()
+    if session["time"] == None or session["city"]==None:
+        session["city"] = learnTheLand.getCity(lat,long)
 
-    return jsonify({"to_say":session["to_say"].pop()})
+    r = random.randint(1,4)
+    city = session["city"]
+    if r ==1:
+        say = learnTheLand.getCrimeData(city)
+    elif r==2:
+        say = city+" is also known as "+ learnTheLand.getNickName()
+    elif r==3:
+        say = learnTheLand.getSummaryPerson(learnTheLand.getNotablePeople(city),city)
+    elif r==4:
+        say = learnTheLand.getSummary(learnTheLand.getLandmarks(city))
+    print say
+    return jsonify({"to_say":say})
 
-
-def generate_to_say(lat, long):
-    city = learnTheLand.getCity(lat,long)
-    ret = learnTheLand.getLandmarks(city)
-    ret += learnTheLand.getNickName(city)
-    ret += learnTheLand.getCrimeData(city)
-    people = learnTheLand.getNotablePeople(city)
-    if len(people)>8:
-        random.shuffle(people)
-        people[""]
-
-
-    return ret
 
 
 
