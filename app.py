@@ -73,7 +73,7 @@ def get_info():
         if person in sayy[1]:
             say = sayy[1]
         else:
-            say = sayy[0] + " is known for "+say[1]
+            say = sayy[0] + " is known for "+sayy[1]
             say = "Born in "+city+" "+say
     else:
         landmark = learnTheLand.getLandmarks(city)
@@ -82,7 +82,7 @@ def get_info():
         if landmark in sayy[1]:
             say = sayy[1]
         else:
-            say = sayy[0]+" is known for "+say[1]
+            say = sayy[0]+" is known for "+sayy[1]
         say = "In "+city+" "+say
 
     print say
