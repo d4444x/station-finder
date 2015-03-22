@@ -14,6 +14,8 @@ def hello_world():
 def get_station():
     city = request.args.get('city')
     categories = request.args.get('categories')[:-1].split(",")
+    print categories
+    print request.args.get('categories')[:-1]
     state = request.args.get('state')
     print city,state,categories
     if categories==[""]:
