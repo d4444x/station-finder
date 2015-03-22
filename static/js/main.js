@@ -133,20 +133,28 @@ function setPrefs() {
 }
 
 function learn(event) {
+	console.log("Requesting geolocation...");
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(learnReq); // could use watch position instead of get position
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
+}
+
+function learnReq(position) {
 	console.log("Requesting facts...");
-	// $.ajax({ url: '/getStation?zip='+zip,
-	// 		success: handleStation,
-	// 		error: function(error, msg, ex) {
-    //      		console.log("The following error occured: " + msg);
-    //         	}
-	// });
-	handleLearn({'msg': 'This is a test'});
+	$.ajax({ url: '/land?lng='+position.coords.longitude+'&lat='+position.coords.latitude,
+			success: handleStation,
+			error: function(error, msg, ex) {
+         		console.log("The following error occured: " + msg);
+            }
+	});
 }
 
 function handleLearn(json) {
 	console.log("Received info");
 	if ('speechSynthesis' in window) {
-		var msg = new SpeechSynthesisUtterance(json.msg);
+		var msg = new SpeechSynthesisUtterance(json.to_say);
     	window.speechSynthesis.speak(msg);
 	} else {
 		alert("Your browser does not support SpeechSynthesisUtterance")
