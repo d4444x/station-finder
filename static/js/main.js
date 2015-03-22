@@ -85,6 +85,16 @@ function last(event) {
 		$("#station").html(cur);
 		stations.unshift(cur);		
 	}
+    if ('speechSynthesis' in window) {
+		var msg = new SpeechSynthesisUtterance(cur);
+
+    	window.speechSynthesis.speak(msg);
+	} else {
+		console.log("SpeechSynthesisUtterance not supported")
+		var audio = new Audio();
+		audio.src = 'http://translate.google.com/translate_tts?ie=UTF-8&q=Hello%20World&tl=en-us';
+		audio.play();
+	}
 	setCookie('stations', stations)
 	right = false;
 }
@@ -101,6 +111,7 @@ function next(event) {
 	}
 	if ('speechSynthesis' in window) {
 		var msg = new SpeechSynthesisUtterance(cur);
+
     	window.speechSynthesis.speak(msg);
 	} else {
 		console.log("SpeechSynthesisUtterance not supported")
