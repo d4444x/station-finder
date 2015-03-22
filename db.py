@@ -1,7 +1,7 @@
 import glob
 from sets import Set
 
-states = glob.glob("/radio_info/*.stations")
+states = glob.glob("radio_info/*.stations")
 categories = Set()
 for state in states:
     f = open(state, "r")
@@ -15,14 +15,14 @@ for state in states:
             categories.add(category)
 
 
-states = glob.glob("/radio_info/*.stations")
+states = glob.glob("radio_info/*.stations")
 
 ss = {}
 
 
 for state in states:
     f = open(state, "r")
-    state = state[55:].replace(".stations","")
+    state = state[len("radio_info/"):].replace(".stations","")
     ss[state] = []
     for l in f:
         if len(l.split("\t"))!=5:
@@ -33,7 +33,7 @@ for state in states:
         if category!=[""]:
             ss[state].append([tag, station, city, category])
 
-print ss.keys()
+# print ss.keys()
 
 def matches(ls1,ls2):
     #Category from user should be second
@@ -88,7 +88,7 @@ def get_stations_asher(categories, city_state):
             pass
 
 def get_stations_mason(city,state,categories):
-    print ss
+    # print ss
     stations = ss[state.lower().replace(" ","")]
     stations = filter_by_city([city],stations)
     stations = filter_by_category(categories,stations)
