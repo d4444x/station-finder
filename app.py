@@ -18,7 +18,7 @@ def get_station():
     print city,state,categories
     ls = db.get_stations_mason(city,state,categories)
     print ls
-    return str([station[1] for station in ls])
+    return json.dumps({"stations":[station[1] for station in ls]})
 
 
 
