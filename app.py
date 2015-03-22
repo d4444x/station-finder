@@ -72,7 +72,9 @@ def get_info():
         sayy = say.split("\n")
         if person in sayy[1]:
             say = sayy[1]
-        say = "Born in "+city+" "+say
+        else:
+            say = sayy[0] + " is known for "+say[1]
+            say = "Born in "+city+" "+say
     else:
         landmark = learnTheLand.getLandmarks(city)
         say = learnTheLand.getSummary(landmark)
