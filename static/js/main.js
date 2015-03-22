@@ -1,22 +1,125 @@
 
 $(document).ready(function () {	
+	
+	setPrefs();
+
 	$(".navbar-nav li a").click(function(event) {
     	$(".navbar-collapse").collapse('hide');
 	});
 
 	$("#find").click(getLocation);
 	$("#learn").click(learn);
-	$("#prefs").click(prefs);
+
+	$("#prefs").click(function(event) {
+		$("#main").addClass('hidden');
+		$("#prefV").removeClass('hidden');
+	});
+
+	$("#cancel").click(function(event) {
+		$("#main").removeClass('hidden');
+		$("#prefV").addClass('hidden');
+	});
+
+	$("#save").click(function(event) {		
+		save();
+
+		$("#main").removeClass('hidden');
+		$("#prefV").addClass('hidden');
+	});
+
+	$(".cat").click(function(event) {
+		if (!$(this).hasClass('btn-selected')) {
+			$(this).addClass('btn-selected');
+			$(this).append('<span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>');
+		} else {
+			$(this).removeClass('btn-selected');
+			$(this).html("");
+			$(this).text($(this).attr('id'));
+		}
+	});
+
+	$("#select").click(function(event) {
+		$(".cat").each(function(index) {
+			if (!$(this).hasClass('btn-selected')) {
+				$(this).addClass('btn-selected');
+				$(this).append('<span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>');
+			}
+		});
+	});
+
+	$("#remove").click(function(event) {
+		$(".cat").each(function(index) {
+			if ($(this).hasClass('btn-selected')) {
+				$(this).removeClass('btn-selected');
+				$(this).html("");
+				$(this).text($(this).attr('id'));
+			}
+		});
+	});
 });
 
+function save() {
+	var prefs = "";
+	$(".btn-selected").each(function(index) {
+		prefs += $(this).attr('id') + ",";
+	});
+
+	setCookie('prefs', prefs);
+}
+
+function setPrefs() {
+	if (getCookie('prefs') != "") {
+		var prefs = getCookie('prefs').split(',');
+		prefs.pop(); // gets rid of the last comma's empty item
+		for(var pref in prefs) {
+			$("#"+prefs[pref]).addClass('btn-selected');
+			$("#"+prefs[pref]).append('<span class="pull-right"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></span>');
+		}
+	}
+}
+
 function learn(event) {
-	var msg = new SpeechSynthesisUtterance('Hello World');
-    window.speechSynthesis.speak(msg);
+	console.log("Requesting facts...");
+	// $.ajax({ url: '/getStation?zip='+zip,
+	// 		success: handleStation,
+	// 		error: function(error, msg, ex) {
+    //      		console.log("The following error occured: " + msg);
+    //         	}
+	// });
+	handleLearn({'msg': 'This is a test'});
 }
 
-function prefs(event) {
-
+function handleLearn(json) {
+	console.log("Received info");
+	if ('speechSynthesis' in window) {
+		var msg = new SpeechSynthesisUtterance(json.msg);
+    	window.speechSynthesis.speak(msg);
+	} else {
+		alert("Your browser does not support SpeechSynthesisUtterance")
+		console.log("SpeechSynthesisUtterance not supported")
+		var audio = new Audio();
+		audio.src = 'http://translate.google.com/translate_tts?ie=UTF-8&q=Hello%20World&tl=en-us';
+		audio.play();
+	}
 }
+
+function setCookie(cname, cvalue) {
+	var expiration_date = new Date();
+	expiration_date.setFullYear(expiration_date.getFullYear() + 1);
+	
+    document.cookie = cname + "=" + cvalue + "; expires=" + expiration_date.toGMTString();
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+} 
 
 function getLocation(event) {
 	console.log("Requesting geolocation...");
@@ -51,8 +154,8 @@ function getRadioStation(zip) {
 	// $.ajax({ url: '/getStation?zip='+zip,
 	// 		success: handleStation,
 	// 		error: function(error, msg, ex) {
- //         		console.log("The following error occured: " + msg);
- //         	}
+    //         		console.log("The following error occured: " + msg);
+    //         	}
 	// });
 	handleStation({'station': '89.1'});
 }

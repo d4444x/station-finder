@@ -10,29 +10,65 @@
   <body>
 	
 	<div class="container-fluid">
-		<div class="row">
-			<div class="col-md-12 text-center">
-				<h1>Tune to:</h1>
+
+		<div id="prefV" class="hidden">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h1>Categories:</h1>
+				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+		  			<a id="save" href="#" class="btn btn-success btn-block btn-lg bigButton" style="margin-bottom: 0px;">Save</a>
+		  		</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+		  			<a id="cancel" href="#" class="btn btn-warning btn-block btn-lg" style="margin-bottom: 10px;">Cancel</a>
+		  		</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6 col-s-6 col-md-6 text-center">
+		  			<a id="select" href="#" class="btn btn-lg btn-success">Select All</a>
+		  		</div>
+		  		<div class="col-xs-6 col-s-6 col-md-6 text-center">
+		  			<a id="remove" href="#" class="btn btn-lg btn-success">Remove All</a>
+		  		</div>
+			</div>
+			<br />
+			{% for cat in categories %}
+			<div class="row">
+		  		<div class="col-md-12 text-center">
+		  			<a id="{{cat}}" href="#" class="cat btn btn-default btn-block btn-lg">{{cat}}</a>
+		  		</div>
+		  	</div>
+		  	{% endfor %}
 		</div>
-		<div class="page-header text-center">
-			<h1 id="station">107.3</h1>
-		</div>
-	  	<div class="row" style="height: 20%;">
-	  		<div class="col-md-12 text-center">
-	  			<a id="find" href="#" class="btn btn-primary btn-block btn-lg bigButton">Find Station</a>
-	  		</div>
-	  	</div>
-	  	<div class="row">
-	  		<div class="col-md-12 text-center">
-	  			<a id="prefs" href="#"  class="btn btn-primary btn-block btn-lg bigButton">Preferences</a>
-	  		</div>
-	  	</div>
-	  	<div class="row">
-	  		<div class="col-md-12 text-center">
-	  			<a id="learn" href="#"  class="btn btn-primary btn-block btn-lg bigButton">My Surroundings</a>
-	  		</div>
-	  	</div>
+		<div id="main" class="">
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<h1>Tune into:</h1>
+				</div>
+			</div>
+			<div class="page-header text-center">
+				<h1 id="station">&nbsp;</h1>
+			</div>
+		  	<div class="row">
+		  		<div class="col-md-12 text-center">
+		  			<a id="find" href="#" class="btn btn-primary btn-block btn-lg bigButton">Find Station</a>
+		  		</div>
+		  	</div>
+		  	<div class="row">
+		  		<div class="col-md-12 text-center">
+		  			<a id="learn" href="#"  class="btn btn-primary btn-block btn-lg bigButton">Learn the Land</a>
+		  		</div>
+		  	</div>
+		  	<div class="row">
+		  		<div class="col-md-12 text-center">
+		  			<a id="prefs" href="#"  class="btn btn-primary btn-block btn-lg bigButton">Preferences</a>
+		  		</div>
+		  	</div>
+		  </div>
 	</div>
 
 

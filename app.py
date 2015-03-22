@@ -3,9 +3,11 @@ from flask import Flask,render_template
 app = Flask(__name__)
 import json
 
+categories = ['Rock', 'News']
+
 @app.route('/')
 def hello_world():
-    return render_template("index.html")
+    return render_template("index.html", categories=categories)
 
 @app.route("/categories")
 def cat():
