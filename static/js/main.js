@@ -169,5 +169,5 @@ function getRadioStation(zip) {
 function handleStation(json) {
 	console.log("Received station");
 	console.log("Recommended station: " + json.station);
-	$("#station").text(json.station);
+	$("#station").html(json.station);
 }
