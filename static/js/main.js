@@ -129,7 +129,6 @@ function getCookie(cname) {
 
 function getLocation(event) {
 	console.log("Requesting geolocation...");
-	alert("Requesting geolocation...");
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(handlePosition); // could use watch position instead of get position
     } else {
@@ -141,7 +140,6 @@ function getLocation(event) {
 function handlePosition(position) {
 	console.log("Received geolocation");
 	console.log("Requesting address json...");
-	alert("Requesting address json...");
 	$.ajax({ url:'http://maps.googleapis.com/maps/api/geocode/json?latlng='+ position.coords.latitude+','+position.coords.longitude+'&sensor=true',
         	success: handleLocationJson,
         	error: function(error, msg, ex) {
@@ -153,8 +151,9 @@ function handlePosition(position) {
 function handleLocationJson(json) { // example data: http://maps.googleapis.com/maps/api/geocode/json?latlng=36.157769099999996,-86.7688226&sensor=true
 	console.log("Received address json");
 	var zip = json.results[0].address_components[7].long_name;
+	var state = json.results[0].address_components[5].long_name;
+	var city = json.results[0].address_components[3].long_name;
 	console.log("Current Zipcode: " + zip);
-	alert("Current Zipcode: " + zip);
 	getRadioStation(zip);
 }
 
@@ -172,6 +171,5 @@ function getRadioStation(zip) {
 function handleStation(json) {
 	console.log("Received station");
 	console.log("Recommended station: " + json.station);
-	alert("Recommended station: " + json.station);
 	$("#station").html(json.station);
 }
