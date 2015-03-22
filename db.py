@@ -1,5 +1,6 @@
 import glob
 from sets import Set
+import nearbyCityGetter
 
 states = glob.glob("radio_info/*.stations")
 categories = Set()
@@ -81,11 +82,25 @@ def filter_by_city(cities, stations):
             stations_r.append(s)
     return stations_r
 
+
+def weird_states(c,states):
+    stations_r = []
+    for state in states:
+        stations = ss[state]
+        for station in stations:
+            tag, s, city, ca = station
+            if matches([city], [c]):
+                stations_r.append(station)
+    return stations_r
+
 def get_stations_asher(categories, city_state):
-    for states,city in city_state:
-        stations = []
-        for state in states:
-            pass
+    stations_r = []
+    for city, states, dist in city_state:
+        stations_r+=weird_states(city,states)
+    print stations_r
+    stations_r = filter_by_category(categories,stations_r)
+    return stations_r
+
 
 def get_stations_mason(city,state,categories):
     # print ss
@@ -93,4 +108,10 @@ def get_stations_mason(city,state,categories):
     stations = filter_by_city([city],stations)
     stations = filter_by_category(categories,stations)
     return stations
+
+def get_stations_long_lat(long, lat, categories):
+    cities = nearbyCityGetter.getNearbyCities(long,lat, 52, 'Q9WERY-K3HTGTL99H')
+    stations_r = get_stations_asher(categories, cities)
+    return stations_r
+
 
