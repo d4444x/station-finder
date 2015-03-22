@@ -12,9 +12,10 @@ def hello_world():
 
 @app.route('/get_station')
 def get_station():
-    city = request.args.get('username')
+    city = request.args.get('city')
     categories = request.args.get('categories')
     state = request.args.get('state')
+    print city,state,categories
     return json.dumps(db.get_stations_mason(city,state,categories))
 
 
