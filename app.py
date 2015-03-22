@@ -1,9 +1,10 @@
 __author__ = 'daxx'
-from flask import Flask,render_template,request,jsonify
+from flask import Flask,render_template,request,jsonify,session
 app = Flask(__name__)
 import json
 import db
 import learnTheLand
+import time
 
 categories = ["Country", "Spanish", "Christian", "Talk Radio", "Contemporary", "News", "Classical", "Sports", "Hits", "Alternative", "Oldies", "Jazz"]
 
@@ -39,12 +40,28 @@ def lat_long():
 
 @app.route("/land")
 def get_info():
+    if not session.has_key("time"):
+        session["time"] = None
     lat = float(request.args.get('lat'))
     long = float(request.args.get("lng"))
-    city = learnTheLand.getCity(lat,long)
+    if not lat or not long:
+        return "Lat or long not given"
+    if session["time"]-time.now()>500 or len(session["to_say"])==0:
+        session["time"] = None
 
-    learnTheLand.getLandmarks(city)
-    learnTheLand.getNickName()
+    if session["time"] == None:
+        session["to_say"] = generate_to_say()
+        session["time"] = time.now()
+
+    return jsonify({"to_say":session["to_say"].pop()})
+
+
+def generate_to_say(lat, long):
+    city = learnTheLand.getCity(lat,long)
+    ret = learnTheLand.getLandmarks(city)
+    return ret
+
+
 
 
 
