@@ -18,7 +18,7 @@ def getSummary(search):
     try:
         temp = wikipedia.summary(search)
     except:
-        return search + " was famous a location around here"
+        return search+"\n"+search + " was famous a location around here"
     temp = temp.split(".")
 
     res = temp[0]
@@ -44,7 +44,7 @@ def getSummaryPerson(search, city):
     try:
         temp = wikipedia.summary(search + " " + city)
     except:
-        return search + "was famous in " + city
+        return search+"\n"+search + "was famous in " + city
     temp = temp.split(".")
 
     res = temp[0]
