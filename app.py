@@ -71,7 +71,7 @@ def get_info():
         say = learnTheLand.getSummaryPerson(person,city)
         sayy = say.split("\n")
         if person in sayy[1]:
-            say = person + " "+ say
+            say = sayy[1]
         say = "Born in "+city+" "+say
     else:
         landmark = learnTheLand.getLandmarks(city)
