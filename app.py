@@ -42,35 +42,32 @@ def lat_long():
 
 @app.route("/land")
 def get_info():
-    if not session.has_key("time") or not session.has_key("to_say") or session["to_say"]==None:
+    if not session.has_key("time")e:
         session["time"] = None
-        session["to_say"] = []
     lat = float(request.args.get('lat'))
     long = float(request.args.get("lng"))
     if not lat or not long:
         return "Lat or long not given"
-    if session["time"] and session["time"]-time.now()>500 or session["to_say"] or len(session["to_say"])==0:
+
+    if session["time"] and session["time"]-time.now()>500:
         session["time"] = None
 
-    if session["time"] == None:
-        session["to_say"] = generate_to_say(lat,long)
-        session["time"] = time.now()
-    say = session["to_say"].pop()
+    if session["time"] == None or session["city"]==None:
+        session["city"] = learnTheLand.getCity(lat,long)
+
+    r = random.randint(1,4)
+    city = session["city"]
+    if r ==1:
+        say = learnTheLand.getCrimeData(city)
+    elif r==2:
+        say = city+" is also known as "+ learnTheLand.getNickName()
+    elif r==3:
+        say = learnTheLand.getSummaryPerson(learnTheLand.getNotablePeople(city),city)
+    elif r==4:
+        say = learnTheLand.getSummary(learnTheLand.getLandmarks(city))
     print say
     return jsonify({"to_say":say})
 
-def generate_to_say(lat, long):
-    city = learnTheLand.getCity(lat,long)
-    ret = learnTheLand.getLandmarks(city)
-    # ret += learnTheLand.getNickName(city)
-    # ret += learnTheLand.getCrimeData(city)
-    people = learnTheLand.getNotablePeople(city)
-    if len(people)>8:
-        random.shuffle(people)
-        people = people[:8]
-    ret += people
-    random.shuffle(ret)
-    return ret
 
 
 
