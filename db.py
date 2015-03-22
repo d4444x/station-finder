@@ -98,7 +98,7 @@ def get_stations_asher(categories, city_state):
     stations_r = []
     for city, states, dist in city_state:
         stations_r+=weird_states(city.lower(),states)
-    print stations_r
+    # print stations_r
     stations_r = filter_by_category(categories,stations_r)
     return stations_r
 
