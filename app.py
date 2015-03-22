@@ -79,6 +79,8 @@ def get_info():
         sayy = say.split("\n")
         if landmark in sayy[1]:
             say = sayy[1]
+        else:
+            say = sayy[0]+" is known for "+say[1]
         say = "In "+city+" "+say
 
     print say
