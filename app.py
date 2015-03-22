@@ -1,11 +1,13 @@
 __author__ = 'daxx'
 from flask import Flask,render_template,request,jsonify,session
+import random
 app = Flask(__name__)
 import json
 import db
 import learnTheLand
 import time
 
+app.secret_key = '123ksjdfa9123afd'
 categories = ["Country", "Spanish", "Christian", "Talk Radio", "Contemporary", "News", "Classical", "Sports", "Hits", "Alternative", "Oldies", "Jazz"]
 
 @app.route('/')
@@ -59,6 +61,14 @@ def get_info():
 def generate_to_say(lat, long):
     city = learnTheLand.getCity(lat,long)
     ret = learnTheLand.getLandmarks(city)
+    ret += learnTheLand.getNickName(city)
+    ret += learnTheLand.getCrimeData(city)
+    people = learnTheLand.getNotablePeople(city)
+    if len(people)>8:
+        random.shuffle(people)
+        people[""]
+
+
     return ret
 
 
